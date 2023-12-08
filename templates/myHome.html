@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>Read and write on Capture</title>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h1>Read and write on Capture</h1>
+    <p>Click below button to read and write</p>
+
+    <!-- Bootstrap Button -->
+    <button type="button"  onclick="getText()" class="btn btn-primary">Text in Pic</button>
+    <button type="button"  onclick="getAudio()" class="btn btn-primary">Read from Pic</button>
+</div>
+
+<div id = "printText"></div>
+
+<!-- Bootstrap JS and Popper.js (for Bootstrap's JavaScript plugins) -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script>
+        function getText() {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Parse the JSON response
+                    var response = JSON.parse(xhr.responseText);
+
+                    // Get the container element
+                    var textContainer = document.getElementById('printText');
+
+                    // Create a new paragraph element
+                    var newParagraph = document.createElement('p');
+
+                    // Set the text content for the paragraph
+                    newParagraph.textContent = response.text;
+
+                    // Append the paragraph to the container
+                    textContainer.appendChild(newParagraph);
+                }
+            };
+            // Specify the type of request and the URL
+            xhr.open('GET', '/getText', true);
+
+            // Send the request
+            xhr.send();
+        }
+    </script>
+ <script>
+        function getAudio() {
+            // Create an audio element
+            var audio = new Audio('/getAudio');
+
+            // Play the audio
+            audio.play();
+        }
+    </script>
+
+</body>
+</html>
